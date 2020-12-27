@@ -12,13 +12,19 @@
 
 const fs = require("fs");
 const express = require("express");
-const bodyParser =require()
+const bodyParser = require("body-parser");
 const path = require("path");
 const middleware = require("./middleware")
 const api = require("./api");
 const port = process.env.PORT || 1337;
 
 const app = express();
+
+
+app.use(bodyParser.json())
+//! cors header should come before any request handles 
+//! the middleware.cors contains Access-Control-Allow-origin 
+//! and other  headers  which allow  cors.
 
 app.use(middleware.cors);
 app.get("/", api.respondText);

@@ -13,6 +13,7 @@
   "author": "olawale",
   "license": "ISC",
   "dependencies": {
+    "cuid": "^2.1.8",
     "express": "^4.17.1",
     "mongoose": "^5.11.8"
   }
