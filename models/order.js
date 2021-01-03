@@ -1,24 +1,22 @@
 const { isEmail } = require("validator");
 
 const db = require("../db");
-
-
+const Schema = db.Schema;
 function emailSchema({ required = false } = { required: true }) {
-    return {
-      type: String,
-      required: true,
-      validate: {
-        validator :isEmail,
-        message: (props) => `${prop.value} is not a valid Email`,
-      },
-    }
-    
+  return {
+    type: String,
+    required: true,
+    validate: {
+      validator: isEmail,
+      message: (props) => `${prop.value} is not a valid Email`,
+    },
+  };
 }
 const Order = db.model("Order", {
   buyerEmail: emailSchema({ required: true }),
   products: [
     {
-      type: String,
+      type: Schema.Types.ObjectId,
       ref: "Product",
       index: true,
       required: true,
@@ -33,6 +31,6 @@ const Order = db.model("Order", {
 });
 
 async function get(_id) {
-    const order = await Order.findById(_id).populate("products").exec();
-    return order
+  const order = await Order.findById(_id).populate("products").exec();
+  return order;
 }

@@ -13,8 +13,10 @@
   "author": "olawale",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cuid": "^2.1.8",
     "express": "^4.17.1",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "validator": "^13.5.2"
   }
 }

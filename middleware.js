@@ -1,7 +1,7 @@
 function cors(req, res, next) {
   const origin = req.headers.origin;
-//* Access-Control-Allow-Origin
-//
+  //* Access-Control-Allow-Origin
+  //
   res.setHeader("Access-Control-Allow-Origin", origin || "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -20,7 +20,8 @@ function cors(req, res, next) {
 function handleError(err, req, res, next) {
   console.error(err);
   if (res.headersSent) return next(err);
-  res.status(500).json({ error: "Internal Error" });
+  res.status(500).json({ error: "Internal Error definde by me " });
+  next()
 }
 
 function notFound(req, res) {
@@ -29,5 +30,5 @@ function notFound(req, res) {
 module.exports = {
   cors,
   handleError,
-  notFound
+  notFound,
 };

@@ -1,4 +1,4 @@
-const Products = require("./products");
+const Products = require("./models/products.js/index.js");
 
 function respondText(req, res) {
   res.setHeader("Content-Type", "text/plain");
@@ -58,7 +58,7 @@ async function getProduct(req, res, next) {
   res.json(product);
 }
 
-async function listProducts(req, res) {
+async function listProducts(req, res, next) {
   const { offset = 0, limit = 25, tag } = req.query;
 
   const products = await Products.list({
@@ -66,24 +66,51 @@ async function listProducts(req, res) {
     limit: Number(limit),
     tag,
   });
-  if (!product) return next();
+  if (!products) return next();
 
   res.json(products);
 }
 
 async function createProduct(req, res, next) {
-  const product = await Products.create(req.body)
+  const product = await Products.create(req.body);
   res.json(product);
+  next();
 }
 async function editProduct(req, res, next) {
-  console.log("request-body", req.body);
-  res.json(req.body);
+  const id = req.params.id
+  const change = req.body
+  const product = Products.edit(id, change)
+  res.json(product);
 }
+
 async function deleteProduct(req, res, next) {
+  const id = req.params.id;
+  await Products.remove(id);
   res.json({
     success: true,
   });
 }
+
+
+async function  createOrder(req, res, next){
+  const order = await Order.create(req.body)
+  res.json(order)
+}
+
+async function listOrders(req, res, next) {
+  const { offset = 0, limit = 25, productId ,status} = req.query
+  const id = req.params.id //? id  from the request parameters
+  const order = await Order.list({
+    offset: Number(offset),
+    limit: Number(limit),
+    status,
+    productId
+  })
+  res.json(order)
+}
+
+
+
 
 module.exports = {
   listProducts,
